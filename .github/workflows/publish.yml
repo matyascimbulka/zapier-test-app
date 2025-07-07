@@ -62,23 +62,18 @@ jobs:
 
             - name: Update CHANGELOG.md
               run: |
-                  RELEASE_DATE=$(date +%Y-%m-%d)
-                  RELEASE_VERSION="v${{ env.VERSION }}"
-                  RELEASE_BODY="${{ github.event.release.body }}"
+                    if [ -n "${{ github.event.release.body }}" ]; then
+                      echo "${RELEASE_BODY}" >> temp_changelog.md
+                      echo "" >> temp_changelog.md
 
-                  # Create new change log entry
-                  echo "## ${RELEASE_VERSION} - ${RELEASE_DATE}" >> temp_changelog.md
-                  echo "" >> temp_changelog.md
-                  echo "${RELEASE_BODY}" >> temp_changelog.md
-                  echo "" >> temp_changelog.md
+                      # Prepend to existing CHANGELOG.md
+                      if [ -f CHANGELOG.md ]; then
+                        cat CHANGELOG.md >> temp_changelog.md
+                      fi
 
-                  # Prepend to existing CHANGELOG.md
-                  if [ -f CHANGELOG.md ]; then
-                      cat CHANGELOG.md >> temp_changelog.md
-                  fi
-
-                  # Replace the original CHANGELOG.md with the new one
-                  mv tmp_changelog.md CHANGELOG.md
+                      # Replace the original CHANGELOG.md with the new one
+                      mv temp_changelog.md CHANGELOG.md
+                    fi
 
             - name: Commit changes
               run: |
