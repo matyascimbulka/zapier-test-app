@@ -1,0 +1,17 @@
+{
+  "name": "zapier-test-app",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "test": "jest --testTimeout 10000"
+  },
+  "dependencies": {
+    "zapier-platform-core": "17.2.0"
+  },
+  "devDependencies": {
+    "jest": "^29.6.0"
+  },
+  "private": true,
+  "exports": "./index.js",
+  "type": "module"
+}
