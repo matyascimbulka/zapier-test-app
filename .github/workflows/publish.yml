@@ -25,7 +25,7 @@ jobs:
                   echo '{ "deployKey": "${{ secrets.APIFY_ZAPIER_DEPLOY_KEY }}" }' > ~/.zapierrc
 
             - name: Install dependencies
-              run: npm install
+              run: npm install --no-audit
 
             - name: Validate Zapier app
               run: zapier validate --without-style
@@ -61,7 +61,8 @@ jobs:
             - name: Update CHANGELOG.md
               run: |
                     if [ -n "${{ github.event.release.body }}" ]; then
-                      echo "${RELEASE_BODY}" >> temp_changelog.md
+                      echo "Updating CHANGELOG.md with release notes"
+                      echo "${{ github.event.release.body }}" >> temp_changelog.md
                       echo "" >> temp_changelog.md
 
                       # Prepend to existing CHANGELOG.md
@@ -89,8 +90,11 @@ jobs:
                     GITHUB_TOKEN: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
 
 
-            - name: Push to Zapier
-              run: zapier push
+            - name: Build Zapier app
+              run: zapier build
+            
+            - name: Upload Zapier app
+              run: zapier upload
 
             - name: Promote new version
               run: zapier promote ${{ env.VERSION }}
