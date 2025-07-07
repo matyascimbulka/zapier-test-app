@@ -1,3 +1,6 @@
+## 0.1.10 / 2025-07-07
+- Changes how Zapier Deploy Key is written to file 
+
 ## 0.1.9 / 2025-07-07
 - Small tweaks
 
