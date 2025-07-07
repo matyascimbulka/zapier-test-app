@@ -90,11 +90,11 @@ jobs:
                     GITHUB_TOKEN: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
 
 
-            - name: Build Zapier app
-              run: zapier build
-            
-            - name: Upload Zapier app
-              run: zapier upload
+            - name: Make sure that npm package are installed
+              run: npm install --no-audit
+
+            - name: Push Zapier app
+              run: zapier push
 
             - name: Promote new version
               run: zapier promote ${{ env.VERSION }}
