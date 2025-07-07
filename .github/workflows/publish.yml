@@ -38,9 +38,6 @@ jobs:
               env:
                   TEST_USER_TOKEN: ${{ secrets.APIFY_TEST_USER_API_TOKEN }}
 
-            - name: Checkout code
-              uses: actions/checkout@v2
-
             - name: Configure git
               run: |
                   git config --global user.name "Apify Release Bot"
@@ -90,11 +87,11 @@ jobs:
                     GITHUB_TOKEN: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
 
 
-            - name: Make sure that npm package are installed
-              run: npm install --no-audit
+            # - name: Make sure that npm package are installed
+            #   run: npm install --no-audit
 
             - name: Push Zapier app
               run: zapier push
 
             - name: Promote new version
-              run: zapier promote ${{ env.VERSION }}
+              run: zapier promote --yes ${{ env.VERSION }}
