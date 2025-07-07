@@ -22,7 +22,8 @@ jobs:
 
             - name: Create .zapierrc file
               run: |
-                  echo '{ "deployKey": "${{ secrets.APIFY_ZAPIER_DEPLOY_KEY }}" }' > ~/.zapierrc
+                  printf '{ "deployKey": "%s" }' "${{ secrets.APIFY_ZAPIER_DEPLOY_KEY }}" > ~/.zapierrc
+                  chmod 600 ~/.zapierrc
 
             - name: Install dependencies
               run: npm install --no-audit
@@ -57,18 +58,18 @@ jobs:
 
             - name: Update CHANGELOG.md
               run: |
-                    if [ -n "${{ github.event.release.body }}" ]; then
-                      echo "${{ github.event.release.body }}" >> temp_changelog.md
-                      echo "" >> temp_changelog.md
+                  if [ -n "${{ github.event.release.body }}" ]; then
+                    echo "${{ github.event.release.body }}" >> temp_changelog.md
+                    echo "" >> temp_changelog.md
 
-                      # Prepend to existing CHANGELOG.md
-                      if [ -f CHANGELOG.md ]; then
-                        cat CHANGELOG.md >> temp_changelog.md
-                      fi
-
-                      # Replace the original CHANGELOG.md with the new one
-                      mv temp_changelog.md CHANGELOG.md
+                    # Prepend to existing CHANGELOG.md
+                    if [ -f CHANGELOG.md ]; then
+                      cat CHANGELOG.md >> temp_changelog.md
                     fi
+
+                    # Replace the original CHANGELOG.md with the new one
+                    mv temp_changelog.md CHANGELOG.md
+                  fi
 
             - name: Commit changes
               run: |
@@ -83,7 +84,7 @@ jobs:
                       echo "No changes to commit."
                   fi
               env:
-                    GITHUB_TOKEN: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
 
             - name: Push Zapier app
               run: zapier push
