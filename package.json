@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "test": "jest --testTimeout 10000"
+    "test": "echo 'No tests set up yet!'",
+    "lint": "echo 'Linting is not set up yet!'"
   },
   "dependencies": {
     "zapier-platform-core": "17.2.0"
