@@ -62,7 +62,7 @@ jobs:
 
             - name: Update CHANGELOG.md
               run: |
-                  RELEASE_DATE=${date +%Y-%m-%d}
+                  RELEASE_DATE=$(date +%Y-%m-%d)
                   RELEASE_VERSION="v${{ env.VERSION }}"
                   RELEASE_BODY="${{ github.event.release.body }}"
 
