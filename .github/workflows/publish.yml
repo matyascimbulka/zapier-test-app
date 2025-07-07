@@ -58,7 +58,6 @@ jobs:
             - name: Update CHANGELOG.md
               run: |
                     if [ -n "${{ github.event.release.body }}" ]; then
-                      echo "Updating CHANGELOG.md with release notes"
                       echo "${{ github.event.release.body }}" >> temp_changelog.md
                       echo "" >> temp_changelog.md
 
@@ -85,10 +84,6 @@ jobs:
                   fi
               env:
                     GITHUB_TOKEN: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
-
-
-            # - name: Make sure that npm package are installed
-            #   run: npm install --no-audit
 
             - name: Push Zapier app
               run: zapier push
