@@ -1,8 +1,6 @@
 import packageJson from './package.json' with { type: 'json' };
 import zapier from 'zapier-platform-core';
 
-import { trigger } from './triggers/trigger.js';
-
 export default {
   // This is just shorthand to reference the installed dependencies you have.
   // Zapier will need to know these before we can upload.
@@ -10,9 +8,7 @@ export default {
   platformVersion: zapier.version,
 
   // If you want your trigger to show up, you better include it here!
-  triggers: {
-    [trigger.key]: trigger,
-  },
+  triggers: {},
 
   // If you want your searches to show up, you better include it here!
   searches: {},
