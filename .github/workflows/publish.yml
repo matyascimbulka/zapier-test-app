@@ -72,6 +72,7 @@ jobs:
 
                           # Replace the original CHANGELOG.md with the new one
                           mv temp_changelog.md CHANGELOG.md
+                          echo "CHANGELOG.md updated with release notes."
                         fi
                       fi
 

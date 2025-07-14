@@ -1,3 +1,6 @@
+## 0.1.13 / 2025-07-14
+- Testing of the new features
+
 ## 0.1.12 / 2025-07-14
 - Improve updating of CHANGELOG.md
 
