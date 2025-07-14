@@ -22,8 +22,7 @@ jobs:
 
             - name: Create .zapierrc file
               run: |
-                  printf '{ "deployKey": "%s" }' "${{ secrets.APIFY_ZAPIER_DEPLOY_KEY }}" > ~/.zapierrc
-                  chmod 600 ~/.zapierrc
+                  echo '{ "deployKey": "${{ secrets.APIFY_ZAPIER_DEPLOY_KEY }}" }' > ~/.zapierrc
 
             - name: Install dependencies
               run: npm install --no-audit
@@ -58,18 +57,23 @@ jobs:
 
             - name: Update CHANGELOG.md
               run: |
-                  if [ -n "${{ github.event.release.body }}" ]; then
-                    echo "${{ github.event.release.body }}" >> temp_changelog.md
-                    echo "" >> temp_changelog.md
+                      if [ -n "${{ github.event.release.body }}" ]; then
+                        # Check if CHANGELOG.md already contains the release body
+                        if [ -f CHANGELOG.md ] && grep -Fq "${{ github.event.release.body }}" CHANGELOG.md; then
+                          echo "CHANGELOG.md already contains the release notes. Skipping update."
+                        else
+                          echo "${{ github.event.release.body }}" >> temp_changelog.md
+                          echo "" >> temp_changelog.md
 
-                    # Prepend to existing CHANGELOG.md
-                    if [ -f CHANGELOG.md ]; then
-                      cat CHANGELOG.md >> temp_changelog.md
-                    fi
+                          # Prepend to existing CHANGELOG.md
+                          if [ -f CHANGELOG.md ]; then
+                            cat CHANGELOG.md >> temp_changelog.md
+                          fi
 
-                    # Replace the original CHANGELOG.md with the new one
-                    mv temp_changelog.md CHANGELOG.md
-                  fi
+                          # Replace the original CHANGELOG.md with the new one
+                          mv temp_changelog.md CHANGELOG.md
+                        fi
+                      fi
 
             - name: Commit changes
               run: |
