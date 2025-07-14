@@ -1,3 +1,6 @@
+## 0.1.12 / 2025-07-14
+- Improve updating of CHANGELOG.md
+
 ## 0.1.11 / 2025-07-07
 - Second attempt at that
 
