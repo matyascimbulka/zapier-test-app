@@ -52,8 +52,13 @@ jobs:
 
             - name: Bump package.json version
               run: |
-                  echo "Updating package.json version to ${{ env.VERSION }}"
-                  npm version ${{ env.VERSION }} --no-git-tag-version
+                      echo "Updating package.json version to ${{ env.VERSION }}"
+                      CURRENT_VERSION=$(node -p "require('./package.json').version")
+                      if [ "$CURRENT_VERSION" != "${{ env.VERSION }}" ]; then
+                        npm version ${{ env.VERSION }} --no-git-tag-version
+                      else
+                        echo "Version ${{ env.VERSION }} is already set in package.json. Skipping version update."
+                      fi
 
             - name: Update CHANGELOG.md
               run: |
