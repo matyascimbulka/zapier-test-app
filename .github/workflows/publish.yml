@@ -49,15 +49,17 @@ jobs:
                   FULL_TAG_NAME="${{ github.event.release.tag_name }}"
                   VERSION_NUMBER="${FULL_TAG_NAME#v}"
                   echo "VERSION=${VERSION_NUMBER}" >> $GITHUB_ENV
-
+                  echo "version=${VERSION_NUMBER}" >> $GITHUB_OUTPUT
+                  
             - name: Bump package.json version
               run: |
-                      echo "Updating package.json version to ${{ env.VERSION }}"
+                      echo "Updating package.json version to ${{ steps.get_version.outputs.version }}"
                       CURRENT_VERSION=$(node -p "require('./package.json').version")
-                      if [ "$CURRENT_VERSION" != "${{ env.VERSION }}" ]; then
-                        npm version ${{ env.VERSION }} --no-git-tag-version
+                      if [ "$CURRENT_VERSION" != "${{ steps.get_version.outputs.version }}" ]; then
+                        npm version ${{ steps.get_version.outputs.version }} --no-git-tag-version
                       else
-                        echo "Version ${{ env.VERSION }} is already set in package.json. Skipping version update."
+                        echo "Version ${{ steps.get_version.outputs.version }} is already set in package.json. Skipping version update."
+                      fi
                       fi
 
             - name: Update CHANGELOG.md
