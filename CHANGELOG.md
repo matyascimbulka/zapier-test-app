@@ -1,3 +1,6 @@
+## 0.1.14 / 2024-07-14
+- Fix for npm version failing when correct version already set
+
 ## 0.1.13 / 2025-07-14
 - Testing of the new features
 
