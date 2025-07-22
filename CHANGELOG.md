@@ -1,3 +1,6 @@
+## 0.1.16 / 2025-07-22
+- Adds new logic for handling CHANGELOG
+
 ## 0.1.15 / 2024-07-14
 - One more test
 
